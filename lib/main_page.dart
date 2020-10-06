@@ -1,6 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:training_app/add_diary_page.dart';
 
 import 'diary_card.dart';
 import 'diary_home.dart';
@@ -78,15 +77,7 @@ class MainPage extends StatelessWidget {
                 ),
               ),
               Padding(padding: EdgeInsets.only(top: 10, bottom: 10)),
-              DiaryHome(),
-              Padding(padding: EdgeInsets.only(top: 7.5, bottom: 7.5)),
-              DiaryCard(
-                title: 'This is the title',
-                subTitle:
-                    'This is the subtitle This is the title This is the title This is the title This is the title This is the title',
-                desc:
-                    'This is the desc This is the desc This is the desc This is the desc This is the desc This is the desc This is the desc',
-              ),
+              AddDiaryPage(),
             ]),
           ),
         ),
