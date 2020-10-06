@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DiaryCard extends StatelessWidget {
+class DiaryCard extends StatefulWidget {
   final String title;
   final String subTitle;
   final String desc;
@@ -9,9 +9,16 @@ class DiaryCard extends StatelessWidget {
       : super(key: key);
 
   @override
+  _DiaryCardState createState() => _DiaryCardState();
+}
+
+class _DiaryCardState extends State<DiaryCard> {
+  bool descTextShowFlag = false;
+
+  @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height / 2.8,
+      height: MediaQuery.of(context).size.height / 3.1,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: Color(0xffB9E9FF),
@@ -19,13 +26,13 @@ class DiaryCard extends StatelessWidget {
           Radius.circular(15),
         ),
       ),
-      padding: EdgeInsets.only(top:15,left:15,right: 15, bottom: 15),
+      padding: EdgeInsets.only(top: 20, left: 15, right: 15),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            this.title,
+            this.widget.title,
             textAlign: TextAlign.justify,
             maxLines: 2,
             style: TextStyle(
@@ -37,7 +44,7 @@ class DiaryCard extends StatelessWidget {
           ),
           Padding(padding: EdgeInsets.all(2.5)),
           Text(
-            this.subTitle,
+            this.widget.subTitle,
             textAlign: TextAlign.justify,
             maxLines: 1,
             style: TextStyle(
@@ -49,9 +56,9 @@ class DiaryCard extends StatelessWidget {
           ),
           Padding(padding: EdgeInsets.all(6.5)),
           Text(
-            this.desc,
+            this.widget.desc,
             textAlign: TextAlign.justify,
-            maxLines: 3,
+            maxLines: descTextShowFlag ? 3 : 2,
             style: TextStyle(
               color: Color(0xff181E21),
               fontSize: 14,
@@ -61,9 +68,18 @@ class DiaryCard extends StatelessWidget {
           ),
           Padding(padding: EdgeInsets.all(10)),
           FlatButton(
-            onPressed: () {},
-            child: Text('Show More'.toUpperCase()),
-            padding: EdgeInsets.only(left: 0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+            ),
+            onPressed: () {
+              setState(() {
+                descTextShowFlag = !descTextShowFlag;
+              });
+            },
+            child: descTextShowFlag
+                ? Text('Show Less'.toUpperCase())
+                : Text('Show More'.toUpperCase()),
+            padding: EdgeInsets.all(0),
           ),
         ],
       ),
