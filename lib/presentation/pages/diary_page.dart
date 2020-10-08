@@ -31,8 +31,10 @@ class _DiaryPageState extends State<DiaryPage> {
                 }
               },
               builder: (context, state) {
-                if (state is DiaryInitial || state is DiaryLoading) {
+                if (state is DiaryLoading) {
                   return DiaryInitialStateWidget();
+                } else if (state is DiaryInitial) {
+                  return Container();
                 } else if (state is DiaryCardAdded) {
                   return DiaryCardListWidget(
                     diaryCardList: state.diaryCardDetailsList,
