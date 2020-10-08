@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:training_app/diary_card.dart';
+
+import '../widgets/diary_card.dart';
+import '../widgets/diary_card_list_widget.dart';
+import '../widgets/diary_text_field.dart';
 
 class DiaryHome extends StatefulWidget {
   @override
@@ -36,11 +39,9 @@ class _DiaryHomeState extends State<DiaryHome> {
                   : MediaQuery.of(context).size.width / 2,
               child: DiaryTextField(
                 maxLines: 1,
-                inputDecoration: _signupScreenInputDecoration(
-                  'Submit New',
-                  Color(0xff2F9DDC),
-                  context,
-                ),
+                labelText: 'Submit New',
+                color: Color(0xff2F9DDC),
+                context: context,
                 errorText: 'Missing title',
                 onTap: () {
                   setState(() {
@@ -64,11 +65,9 @@ class _DiaryHomeState extends State<DiaryHome> {
                     Padding(padding: EdgeInsets.only(top: 5, bottom: 5)),
                     DiaryTextField(
                       maxLines: 6,
-                      inputDecoration: _signupScreenInputDecoration(
-                        'Enter Description',
-                        Color(0xff15ABDA),
-                        context,
-                      ),
+                      labelText: 'Enter Description',
+                      color: Color(0xff15ABDA),
+                      context: context,
                       errorText: 'Missing Description',
                       onChange: (value) {
                         this._desc = value;
@@ -103,33 +102,24 @@ class _DiaryHomeState extends State<DiaryHome> {
         ),
       ),
       Padding(padding: EdgeInsets.only(top: 7.5, bottom: 7.5)),
-      ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        physics: ScrollPhysics(),
-        itemCount: this._diaryCardList.length,
-        itemBuilder: (context, index) {
-          return Column(
-            children: [
-              this._diaryCardList[index],
-              Padding(padding: EdgeInsets.only(top: 5, bottom: 5))
-            ],
-          );
-        },
-      ),
+      DiaryCardListWidget(diaryCardList: _diaryCardList),
     ]);
   }
 
   void _submitFunction() {
     if (_formKey.currentState.validate()) {
-      setState(() {
-        this._isExpanded = false;
-        this._diaryCardList.add(new DiaryCard(
-              title: this._title,
-              subTitle: 'This is the subtitle',
-              desc: this._desc,
-            ));
-      });
+      setState(
+        () {
+          this._isExpanded = false;
+          this._diaryCardList.add(
+                new DiaryCard(
+                  title: this._title,
+                  subTitle: 'This is the subtitle',
+                  desc: this._desc,
+                ),
+              );
+        },
+      );
       this._controllerTitle.clear();
       this._controllerDesc.clear();
 
@@ -139,85 +129,5 @@ class _DiaryHomeState extends State<DiaryHome> {
         ),
       );
     }
-  }
-
-  InputDecoration _signupScreenInputDecoration(
-      String labelText, Color color, BuildContext context) {
-    return InputDecoration(
-      hintText: labelText,
-      hintStyle: TextStyle(
-        color: Color.fromARGB(100, 0, 0, 0),
-        letterSpacing: 1,
-        fontSize: 16,
-        fontWeight: FontWeight.w400,
-      ),
-      contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 15.0),
-      filled: true,
-      fillColor: color.withOpacity(0.8),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15.0),
-        borderSide: BorderSide(
-          color: Colors.transparent,
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15.0),
-        borderSide: BorderSide(
-          color: Colors.transparent,
-        ),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Theme.of(context).errorColor,
-        ),
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-    );
-  }
-}
-
-class DiaryTextField extends StatelessWidget {
-  final int maxLines;
-  final InputDecoration inputDecoration;
-  final String errorText;
-  final TextEditingController controller;
-  Function onChange;
-  
-  Function onTap = () {};
-
-  DiaryTextField(
-      {Key key,
-      this.maxLines,
-      this.inputDecoration,
-      this.errorText,
-      this.controller,
-      this.onTap,
-      this.onChange})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      
-      maxLines: this.maxLines,
-      decoration: this.inputDecoration,
-      onTap: this.onTap,
-      style: TextStyle(
-        fontSize: 16,
-        letterSpacing: 1,
-        color: Color.fromARGB(200, 0, 0, 0),
-      ),
-      onChanged: this.onChange,
-      controller: this.controller,
-      validator: (value) {
-        if (value.isEmpty) {
-          return this.errorText;
-        }
-        return null;
-      },
-    );
   }
 }
