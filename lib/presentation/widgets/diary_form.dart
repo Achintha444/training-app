@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:training_app/presentation/bloc/diary_bloc.dart';
 
-import '../widgets/diary_card.dart';
-import '../widgets/diary_card_list_widget.dart';
 import '../widgets/diary_text_field.dart';
 
-class DiaryHome extends StatefulWidget {
+class DiaryForm extends StatefulWidget {
   @override
-  _DiaryHomeState createState() => _DiaryHomeState();
+  _DiaryFormState createState() => _DiaryFormState();
 }
 
-class _DiaryHomeState extends State<DiaryHome> {
+class _DiaryFormState extends State<DiaryForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _controllerTitle = new TextEditingController();
   final TextEditingController _controllerDesc = new TextEditingController();
   bool _isExpanded;
   String _title = "";
   String _desc = "";
-  List<DiaryCard> _diaryCardList;
 
   void initState() {
     super.initState();
     _isExpanded = true;
-    this._diaryCardList = [];
   }
 
   @override
@@ -102,7 +100,6 @@ class _DiaryHomeState extends State<DiaryHome> {
         ),
       ),
       Padding(padding: EdgeInsets.only(top: 7.5, bottom: 7.5)),
-      DiaryCardListWidget(diaryCardList: _diaryCardList),
     ]);
   }
 
@@ -111,23 +108,12 @@ class _DiaryHomeState extends State<DiaryHome> {
       setState(
         () {
           this._isExpanded = false;
-          this._diaryCardList.add(
-                new DiaryCard(
-                  title: this._title,
-                  subTitle: 'This is the subtitle',
-                  desc: this._desc,
-                ),
-              );
         },
       );
       this._controllerTitle.clear();
       this._controllerDesc.clear();
-
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text('New Diary Entry Added'),
-        ),
-      );
+      BlocProvider.of<DiaryBloc>(context).add(AddDiaryCard(this._title,this._desc));
+      //.dispatch(AddDiaryCard(user: user));
     }
   }
 }

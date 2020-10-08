@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'presentation/pages/diary_home.dart';
+import 'presentation/pages/diary_page.dart';
 
 
 class MainPage extends StatelessWidget {
@@ -76,7 +76,7 @@ class MainPage extends StatelessWidget {
                 ),
               ),
               Padding(padding: EdgeInsets.only(top: 10, bottom: 10)),
-              DiaryHome(),
+              DiaryPage(),
             ]),
           ),
         ),

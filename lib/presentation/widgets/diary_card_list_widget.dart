@@ -5,11 +5,11 @@ import 'diary_card.dart';
 class DiaryCardListWidget extends StatelessWidget {
   const DiaryCardListWidget({
     Key key,
-    @required List<DiaryCard> diaryCardList,
+    @required List<List<String>> diaryCardList,
   })  : _diaryCardList = diaryCardList,
         super(key: key);
 
-  final List<DiaryCard> _diaryCardList;
+  final List<List<String>> _diaryCardList;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,11 @@ class DiaryCardListWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         return Column(
           children: [
-            this._diaryCardList[index],
+            DiaryCard(
+              title: this._diaryCardList[index][0],
+              subTitle: 'This is the Subtitle',
+              desc: this._diaryCardList[index][1],
+            ),
             Padding(padding: EdgeInsets.only(top: 5, bottom: 5))
           ],
         );
