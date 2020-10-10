@@ -7,7 +7,7 @@ class DiaryTextField extends StatelessWidget {
   final String labelText;
   final Color color;
   final BuildContext context;
-  Function onChange;
+  final Function onChange;
 
   Function onTap = () {};
 

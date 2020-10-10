@@ -1,33 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:training_app/presentation/bloc/diary_bloc.dart';
 
+import '../bloc/diary_page/diary_bloc.dart';
+import '../bloc/diary_page/diary_event.dart';
 import '../widgets/diary_text_field.dart';
 
 class DiaryForm extends StatefulWidget {
+  final DiaryBloc blocProvider;
+
+  DiaryForm({Key key, this.blocProvider}) : super(key: key);
   @override
   _DiaryFormState createState() => _DiaryFormState();
 }
 
 class _DiaryFormState extends State<DiaryForm> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _controllerTitle = new TextEditingController();
-  final TextEditingController _controllerDesc = new TextEditingController();
-  bool _isExpanded;
+  final formKey = GlobalKey<FormState>();
+  final TextEditingController controllerTitle = new TextEditingController();
+  final TextEditingController controllerDesc = new TextEditingController();
+  bool _isExpanded = true;
   String _title = "";
   String _desc = "";
 
-  void initState() {
-    super.initState();
-    _isExpanded = true;
-  }
+  // void initState() {
+  //   super.initState();
+  //   _isExpanded = true;
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Form(
-          key: _formKey,
+          key: formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -50,7 +53,7 @@ class _DiaryFormState extends State<DiaryForm> {
                   onChange: (value) {
                     this._title = value;
                   },
-                  controller: this._controllerTitle,
+                  controller: this.controllerTitle,
                 ),
               ),
               AnimatedContainer(
@@ -71,7 +74,7 @@ class _DiaryFormState extends State<DiaryForm> {
                         onChange: (value) {
                           this._desc = value;
                         },
-                        controller: this._controllerDesc,
+                        controller: this.controllerDesc,
                       ),
                       Padding(padding: EdgeInsets.only(top: 5)),
                       Container(
@@ -106,16 +109,15 @@ class _DiaryFormState extends State<DiaryForm> {
   }
 
   void _submitFunction() {
-    if (_formKey.currentState.validate()) {
+    if (formKey.currentState.validate()) {
       setState(
         () {
           this._isExpanded = false;
         },
       );
-      this._controllerTitle.clear();
-      this._controllerDesc.clear();
-      BlocProvider.of<DiaryBloc>(context)
-          .add(AddDiaryCard(this._title, this._desc));
+      this.controllerTitle.clear();
+      this.controllerDesc.clear();
+      widget.blocProvider.add(AddDiaryEvent(this._title, this._desc));
       //.dispatch(AddDiaryCard(user: user));
     }
   }

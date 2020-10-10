@@ -1,14 +1,26 @@
-part of 'diary_bloc.dart';
+// part of 'diary_bloc.dart';
 
-@immutable
-abstract class DiaryState {}
+// @immutable
+// abstract class DiaryState {}
 
-class DiaryInitial extends DiaryState {}
+// class DiaryInitial extends DiaryState {}
 
-class DiaryLoading extends DiaryState{}
+// class DiaryInitialLoaded extends DiaryState {
+//   final Stream<List<DiaryEntry>> diaryEntryStream;
 
-class DiaryCardAdded extends DiaryState{
-  final List<List<String>> diaryCardDetailsList;
+//   DiaryInitialLoaded(this.diaryEntryStream);
+// }
 
-  DiaryCardAdded(this.diaryCardDetailsList);
-}
+// class DiaryLoading extends DiaryState {}
+
+// class DiaryCardAdded extends DiaryState {
+//   final List<DiaryEntry> diaryCardDetailsList;
+
+//   DiaryCardAdded(this.diaryCardDetailsList);
+// }
+
+// class DiaryError extends DiaryState {
+//   final String errorMessage;
+
+//   DiaryError(this.errorMessage);
+// }
