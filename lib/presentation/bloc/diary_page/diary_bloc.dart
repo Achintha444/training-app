@@ -14,7 +14,6 @@ class DiaryBloc extends Bloc<DiaryEvent, DiaryState> {
   final DiaryRepo _diaryRepo = new DiaryRepo();
 
   DiaryBloc(BuildContext context) : super(DiaryState.initialState) {
-    print('check1-1');
     this
         ._diaryRepo
         .query(specification: ComplexSpecification([]))
@@ -34,8 +33,6 @@ class DiaryBloc extends Bloc<DiaryEvent, DiaryState> {
       case LoadDiaryEntry:
         print('check1-2');
         try {
-          //yield state.clone(loading: true);
-          print('aaaa');
           final _diaryEntryList = (event as LoadDiaryEntry).diaryEntryList;
           print(_diaryEntryList[0].desc);
           yield state.clone(diaryEntryList: _diaryEntryList);

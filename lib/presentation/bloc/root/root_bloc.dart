@@ -12,14 +12,11 @@ class RootBloc extends Bloc<RootEvent, RootState> {
   static final log = Log("RootBloc");
 
   RootBloc(BuildContext context) : super(RootState.initialState){
-    print('check3');
     _initialize();
   }
 
   void _initialize() async {
-    print ('check2');
     await Firebase.initializeApp();
-    print ('check4');
     add(DoneInitializingEvent());
   }
 
